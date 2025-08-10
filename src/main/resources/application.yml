@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/productsapirest
+    username: root
+    password: q1w2e3
+  jpa:
+    hibernate:
+      ddl-auto: update
