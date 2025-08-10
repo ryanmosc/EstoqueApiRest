@@ -1,5 +1,6 @@
 package com.ryanmosc.ApiRestEstoque.service;
 
+import com.ryanmosc.ApiRestEstoque.exceptions.ProductBadRequests;
 import com.ryanmosc.ApiRestEstoque.exceptions.ProductNotfound;
 import com.ryanmosc.ApiRestEstoque.model.Exits;
 import com.ryanmosc.ApiRestEstoque.model.Products;
@@ -38,20 +39,29 @@ public class ExitsService {
 
     //Create Exit
     public Exits saveExit (Exits exit){
-        Long productId = exit.getProductId();
+        try {
+            Long productId = exit.getProductId();
+            boolean existsId = findByIdBolean(productId);
 
-        boolean existsId = findByIdBolean(productId);
-        if (existsId) {
-            Products products = findById(productId);
-            Integer productQuantity = products.getQuantity();
-            Integer exitQuantity = exit.getQuantity();
-            productQuantity -= exitQuantity;
-            products.setQuantity(productQuantity);
-            productsRepository.save(products);
-            return exitsRepository.saveAndFlush(exit);
+            if (existsId) {
+                Products products = findById(productId);
+                Integer productQuantity = products.getQuantity();
+                Integer exitQuantity = exit.getQuantity();
+                productQuantity -= exitQuantity;
+
+                if (productQuantity < exitQuantity) {
+                    throw new RuntimeException("Quantidade de saida:" + productQuantity + " maior que a existente:" + exitQuantity);
+                } else {
+                    products.setQuantity(productQuantity);
+                    productsRepository.save(products);
+                    return exitsRepository.saveAndFlush(exit);
+                }
+            } else {
+                throw new ProductNotfound();
+            }
         }
-        else {
-            throw new ProductNotfound();
+        catch (Exception e){
+            throw new ProductBadRequests();
         }
     }
 
