@@ -2,6 +2,7 @@ package com.ryanmosc.ApiRestEstoque.service;
 
 import com.ryanmosc.ApiRestEstoque.exceptions.ProductBadRequests;
 import com.ryanmosc.ApiRestEstoque.exceptions.ProductNotfound;
+import com.ryanmosc.ApiRestEstoque.exceptions.StockQuantityExceededException;
 import com.ryanmosc.ApiRestEstoque.model.Exits;
 import com.ryanmosc.ApiRestEstoque.model.Products;
 import com.ryanmosc.ApiRestEstoque.repository.ExitsRepository;
@@ -37,6 +38,9 @@ public class ExitsService {
 
 
 
+
+
+
     //Create Exit
     public Exits saveExit (Exits exit){
 
@@ -50,7 +54,7 @@ public class ExitsService {
                 productQuantity -= exitQuantity;
 
                 if (productQuantity < exitQuantity) {
-                    throw new RuntimeException("Quantidade de saida:" + productQuantity + " maior que a existente:" + exitQuantity);
+                    throw new StockQuantityExceededException("Quantidade de saida:" + productQuantity + " maior que a existente:" + exitQuantity);
                 } else {
                     products.setQuantity(productQuantity);
                     productsRepository.save(products);
@@ -61,6 +65,8 @@ public class ExitsService {
             }
 
     }
+
+
 
 
 

@@ -1,9 +1,6 @@
 package com.ryanmosc.ApiRestEstoque.infra;
 
-import com.ryanmosc.ApiRestEstoque.exceptions.ProductBadRequests;
-import com.ryanmosc.ApiRestEstoque.exceptions.ProductError;
-import com.ryanmosc.ApiRestEstoque.exceptions.ProductNameNotFound;
-import com.ryanmosc.ApiRestEstoque.exceptions.ProductNotfound;
+import com.ryanmosc.ApiRestEstoque.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -52,6 +49,17 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ProductBadRequests.class)
     private ResponseEntity<RestErrorMessage> handleBadRequest(ProductBadRequests exception) {
+        RestErrorMessage threatResponse = new RestErrorMessage(
+                exception.getMessage(),
+                HttpStatus.BAD_REQUEST,
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
+    }
+
+    @ExceptionHandler(StockQuantityExceededException.class)
+    private ResponseEntity<RestErrorMessage> handleBadRequest(StockQuantityExceededException exception) {
         RestErrorMessage threatResponse = new RestErrorMessage(
                 exception.getMessage(),
                 HttpStatus.BAD_REQUEST,
