@@ -39,7 +39,7 @@ public class ExitsService {
 
     //Create Exit
     public Exits saveExit (Exits exit){
-        try {
+
             Long productId = exit.getProductId();
             boolean existsId = findByIdBolean(productId);
 
@@ -59,10 +59,7 @@ public class ExitsService {
             } else {
                 throw new ProductNotfound();
             }
-        }
-        catch (Exception e){
-            throw new ProductBadRequests();
-        }
+
     }
 
 
