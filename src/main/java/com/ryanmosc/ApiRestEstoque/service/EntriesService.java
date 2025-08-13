@@ -9,6 +9,7 @@ import com.ryanmosc.ApiRestEstoque.exceptions.ProductError;
 import com.ryanmosc.ApiRestEstoque.exceptions.ProductNotfound;
 import com.ryanmosc.ApiRestEstoque.exceptions.StockQuantityExceededException;
 import com.ryanmosc.ApiRestEstoque.model.Entries;
+import com.ryanmosc.ApiRestEstoque.model.Enums;
 import com.ryanmosc.ApiRestEstoque.model.Products;
 import com.ryanmosc.ApiRestEstoque.repository.EntriesRepository;
 import com.ryanmosc.ApiRestEstoque.repository.ProductsRepository;
@@ -60,6 +61,7 @@ public class EntriesService {
             } else {
                 products.setQuantity(productQuantity);
                 productsRepository.save(products);
+                entries.setType(String.valueOf(Enums.ENTRADA));
                 return entriesRepository.saveAndFlush(entries);
             }
         } else {

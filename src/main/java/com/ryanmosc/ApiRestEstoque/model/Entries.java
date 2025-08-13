@@ -25,7 +25,7 @@ public class Entries {
     @Column(name = "product_Id")
     private Long productId;
 
-    @NotBlank
+
     @Column(name = "type")
     private String type;
 

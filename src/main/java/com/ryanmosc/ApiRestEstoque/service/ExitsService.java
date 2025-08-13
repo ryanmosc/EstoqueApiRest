@@ -2,6 +2,7 @@ package com.ryanmosc.ApiRestEstoque.service;
 
 import com.ryanmosc.ApiRestEstoque.ExitsDto.GetAllDto;
 import com.ryanmosc.ApiRestEstoque.exceptions.*;
+import com.ryanmosc.ApiRestEstoque.model.Enums;
 import com.ryanmosc.ApiRestEstoque.model.Exits;
 import com.ryanmosc.ApiRestEstoque.model.Products;
 import com.ryanmosc.ApiRestEstoque.repository.ExitsRepository;
@@ -57,6 +58,7 @@ public class ExitsService {
                 } else {
                     products.setQuantity(productQuantity);
                     productsRepository.save(products);
+                    exit.setType(String.valueOf(Enums.SAIDA));
                     return exitsRepository.saveAndFlush(exit);
                 }
             } else {

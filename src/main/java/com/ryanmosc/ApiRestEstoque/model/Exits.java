@@ -27,8 +27,9 @@ public class Exits {
     @Column(name = "product_Id")
     private Long productId;
 
-    @NotBlank
+
     @Column(name = "type")
+
     private String type;
 
     @Positive
@@ -48,6 +49,8 @@ public class Exits {
     public Exits(){
 
     }
+
+
 
 
 }
