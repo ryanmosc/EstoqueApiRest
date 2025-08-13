@@ -40,5 +40,7 @@ public class Exits {
     @Column(name = "date")
     private LocalDate date;
 
+    public Exits(){}
+
 
 }

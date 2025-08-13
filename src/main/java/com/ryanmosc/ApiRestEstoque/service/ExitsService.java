@@ -1,8 +1,6 @@
 package com.ryanmosc.ApiRestEstoque.service;
 
-import com.ryanmosc.ApiRestEstoque.exceptions.ProductBadRequests;
-import com.ryanmosc.ApiRestEstoque.exceptions.ProductNotfound;
-import com.ryanmosc.ApiRestEstoque.exceptions.StockQuantityExceededException;
+import com.ryanmosc.ApiRestEstoque.exceptions.*;
 import com.ryanmosc.ApiRestEstoque.model.Exits;
 import com.ryanmosc.ApiRestEstoque.model.Products;
 import com.ryanmosc.ApiRestEstoque.repository.ExitsRepository;
@@ -11,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -35,8 +35,6 @@ public class ExitsService {
             throw new ProductNotfound("Produto não encontrado com o id " + id);
         }
     }
-
-
 
 
 
@@ -66,6 +64,41 @@ public class ExitsService {
 
     }
 
+    //Read Exits
+    public List<Exits> getAllExit(){
+        try {
+            return exitsRepository.findAll();
+        }
+        catch (Exception e){
+            throw new ProductError("Erro ao buscar saidas");
+        }
+    }
+
+    //Read Exit by id
+    public Exits getExitById(Long id){
+        try {
+            return exitsRepository.findById(id).orElseThrow(
+                    () -> new ProductNotfound("Exit not found with id: " + id));
+        }
+        catch (Exception e){
+            throw new ProductNotfound("Exit not found with id: " + id);
+        }
+
+
+    }
+
+
+
+    //Find Product by id
+    public Products findExitByProductId(Long id) {
+        try {
+            return productsRepository.findById(id).orElseThrow(
+                    () -> new ProductNotfound("product with id:" + id + " not found"));
+        }
+        catch (Exception e){
+            throw new ProductNotfound("Produto não encontrado com o id " + id);
+        }
+    }
 
 
 

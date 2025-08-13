@@ -59,7 +59,7 @@ public class ProductsController {
     @Operation
     @GetMapping(params = "name")
     public ResponseEntity<List<Products>> findByName(@RequestParam String name){
-        if (name == null){
+        if (name == null ||name.trim().isEmpty()){
             throw new ProductError("Product name has not found " + name);
         }
         List<Products> products = productsService.findByName(name);
