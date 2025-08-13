@@ -40,7 +40,14 @@ public class Exits {
     @Column(name = "date")
     private LocalDate date;
 
-    public Exits(){}
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
+    private Products products;
+
+    public Exits(){
+
+    }
 
 
 }
